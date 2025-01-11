@@ -22,8 +22,6 @@ export default function PdfInput(){
             
             // Wait for ConvertPdf to resolve and get the extracted text
             const extractedText = await ConvertPdf(file, setText);
-    
-            console.log(extractedText);  // This is the extracted text from the PDF
             
             // Now generate the audio URL after the text has been extracted
             const audioFileUrl = `http://localhost:5000/tts/${extractedText}`;
@@ -42,9 +40,9 @@ export default function PdfInput(){
     
 
     return (
-        <div>
-            <input type="text" value={text} onChange={handleTextChange} />
-            <button onClick={handleSubmit}>Submit</button>
+        <div className="pdf-input">
+            {/* <input type="text" value={text} onChange={handleTextChange} />
+            <button onClick={handleSubmit}>Submit</button> */}
             {audioUrl && text && (
                 <div>
                 <button onClick={() => window.location.href = audioUrl}>Download</button>

@@ -1,0 +1,14 @@
+* {
+    box-sizing: border-box;
+  }
+body {
+    margin:0;
+    min-width: 1200px;
+}
+
+.app{
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    height: 100vh;
+    background-color: #f3f4f6
+}
