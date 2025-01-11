@@ -4,33 +4,17 @@ import ConvertPdf from './ConvertPdf';
 
 
 
-export default function PdfInput(){
-    const [text, setText] = useState('');
-    const [audioUrl, setAudioUrl] = useState()
-    const [audio, setAudio] = useState()
+export default function PdfInput({setText}){
 
 
-
-    function handleTextChange(e){
-        setText(e.target.value);
-    };
 
     async function handleSubmit() {
         try {
             const fileInput = document.getElementById('pdfUpload');
             const file = fileInput.files[0];
             
-            // Wait for ConvertPdf to resolve and get the extracted text
             const extractedText = await ConvertPdf(file, setText);
-            
-            // Now generate the audio URL after the text has been extracted
-            const audioFileUrl = `http://localhost:5000/tts/${extractedText}`;
-            setAudioUrl(audioFileUrl);
-    
-            // Create and play the audio
-            const audioPlayer = new Audio(audioFileUrl);
 
-            setAudio(audioPlayer);  // Optionally store the audio player for future control
         } catch (error) {
             console.error('Error during file processing:', error);
         }
@@ -41,14 +25,6 @@ export default function PdfInput(){
 
     return (
         <div className="pdf-input">
-            {/* <input type="text" value={text} onChange={handleTextChange} />
-            <button onClick={handleSubmit}>Submit</button> */}
-            {audioUrl && text && (
-                <div>
-                <button onClick={() => window.location.href = audioUrl}>Download</button>
-                <button onClick={() => audio.play()}>Play</button>
-                </div>
-            )}
             <div className="container">
                 <h1>PDF to Audiobook Converter</h1>
                 <div className="upload-section">
