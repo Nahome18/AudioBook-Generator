@@ -1,4 +1,4 @@
-import { React, useState, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import PdfInput from './components/PdfInPut/PdfInput';
 import './App.css'
 import Sections from './components/Sections/Sections'
