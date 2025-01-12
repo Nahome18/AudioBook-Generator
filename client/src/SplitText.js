@@ -1,5 +1,5 @@
 
-export default function SplitText(text, setAudioUrl){
+export default function SplitText(text){
     let result = [];
     const words = text.split(" ")
     let currWord = ''
