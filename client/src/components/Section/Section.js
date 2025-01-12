@@ -1,11 +1,11 @@
 import React from 'react'
 import './Section.css'
 
-export default function Sections({indx, audioUrl}){
+export default function Sections({name, audioUrl}){
     const audio = new Audio(audioUrl)
     return(
         <div className='section'>
-            <h2>Section {indx+1}</h2>
+            <h2>{name}</h2>
             {audioUrl && (
                 <div className='buttons'>
                 <button onClick={() => window.location.href = audioUrl}>Download</button>

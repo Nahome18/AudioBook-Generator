@@ -14,7 +14,7 @@ export default function ConvertPdf(file, setText) {
                 if (data.success) {
                     const text = data.extracted_text;  // Ensure this is being sent by Flask in response
                     setText(text); // Update the text in the parent component
-                    resolve(text);  // Resolve the Promise with the extracted text
+                    resolve();  // Resolve the Promise with the extracted text
                 } else {
                     reject(data.message);  // Reject the Promise if there’s an error
                 }

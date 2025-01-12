@@ -15,20 +15,28 @@ CORS(app)
 key = os.getenv("api_key")
 client = OpenAI(api_key=key)
 
-@app.route('/tts/<text>')
-def text_to_speech(text):
-    speech_file_path = Path(__file__).parent / "abebe.wav"
-    response = client.audio.speech.create(
-            model="tts-1",
-            voice="alloy",
-            input=text
-            )
-    response.stream_to_file(speech_file_path)
 
-    return send_from_directory('.', 'abebe.wav', as_attachment=True, mimetype='audio/wav')
+out_dir = Path(__file__).parent / "Outputs"
+
+@app.route('/tts/<text>/<name>')
+def text_to_speech(text, name):
+    speech_file_path = out_dir / f"{name}.wav"
+    if not speech_file_path.exists():
+        print(f"Generating audio for {name}")
+        print(f"Api requested for {name}")
+        print(f"Text: {text}")
+        with client.audio.speech.with_streaming_response.create(
+                model="tts-1",
+                voice="alloy",
+                input=text
+        ) as response:
+            response.stream_to_file(speech_file_path)
+    return send_from_directory(out_dir, f"{name}.wav", as_attachment=True, mimetype='audio/wav')
+
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    print("Converting to text")
     if 'pdf' not in request.files:
         return jsonify({'success': False, 'message': 'No file uploaded'}), 400
 
