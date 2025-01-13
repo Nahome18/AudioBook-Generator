@@ -73,12 +73,12 @@ def upload():
         return jsonify({'success': False, 'message': str(e)}), 500
     
 
-# @app.route('/merged/<name>', methods=['POST'])
-# def merged(name):
-#     speech_file_path = out_dir / f"{name}.wav"
-#     if not speech_file_path.exists():
-#         mergeWav.merge_wav_files("Outputs", f"{name}.wav")
-#     return send_from_directory(out_dir, f"{name}.wav", as_attachment=True, mimetype='audio/wav')
+@app.route('/merged/<name>')
+def merged(name):
+    speech_file_path = out_dir / f"{name}merged.wav"
+    if not speech_file_path.exists():
+        mergeWav.merge_wav_files("Outputs", f"{name}merged.wav")
+    return send_from_directory(out_dir, f"{name}merged.wav", as_attachment=True, mimetype='audio/wav')
 
 
 

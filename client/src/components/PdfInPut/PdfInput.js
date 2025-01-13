@@ -4,7 +4,7 @@ import ConvertPdf from './ConvertPdf';
 
 
 
-export default function PdfInput({fileName, setText, setFileName, setAudioUrl, setAllUrlsResolved}){
+export default function PdfInput({fileName, setText, setFileName, setAudioUrl, setAllUrlsResolved, setFullUrlResolved}){
 
     const [newf, setNewf] = useState(true)
     async function handleSubmit() {
@@ -31,6 +31,7 @@ export default function PdfInput({fileName, setText, setFileName, setAudioUrl, s
         const x = document.getElementById('pdfUpload')
         if (x){x.value = ''}
         setAllUrlsResolved(false)
+        setFullUrlResolved(false)
     }
     
     

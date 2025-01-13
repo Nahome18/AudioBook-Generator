@@ -11,6 +11,7 @@ export default function App() {
     const [audioUrl, setAudioUrl] = useState([])
     const [fileName, setFileName] = useState('')
     const [allUrlsResolved, setAllUrlsResolved] = useState(false)
+    const [fullUrlResolved, setFullUrlResolved] = useState(false)
 
     useEffect(() => {
       if (text) {
@@ -58,11 +59,14 @@ export default function App() {
         setFileName={setFileName}
         setAudioUrl={setAudioUrl}
         setAllUrlsResolved={setAllUrlsResolved}
+        setFullUrlResolved={setFullUrlResolved}
         />
       {<Sections 
           audioUrl={audioUrl}
           fileName={fileName}
           allUrlsResolved={allUrlsResolved}
+          fullUrlResolved={fullUrlResolved}
+          setFullUrlResolved={setFullUrlResolved}
           /> }
     </div>
     

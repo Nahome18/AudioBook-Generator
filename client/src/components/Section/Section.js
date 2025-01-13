@@ -17,14 +17,12 @@ export default function Sections({name, audioUrl}){
     return(
         <div className='section'>
             <h2>{name}</h2>
-            {audioUrl && (
-                <div className='buttons'>
-                <button onClick={() => window.location.href = audioUrl}>Download</button>
-                <button onClick={handlePlayPause}>
-                        {isPlaying ? 'Pause' : 'Play'} {/* Toggle button text */}
-                    </button>
-                </div>
-            )}
+            <div className='buttons'>
+            <button onClick={() => window.location.href = audioUrl}>Download</button>
+            <button onClick={handlePlayPause}>
+                    {isPlaying ? 'Pause' : 'Play'} {/* Toggle button text */}
+                </button>
+            </div>
             <h1></h1>
             
         </div>
