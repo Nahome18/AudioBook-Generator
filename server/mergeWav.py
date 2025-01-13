@@ -1,23 +1,31 @@
-import wave
 import os
+from pydub import AudioSegment
+from pathlib import Path
 
 def merge_wav_files(folder_path, output_file):
-    # List all .wav files in the folder
-    wav_files = [f for f in os.listdir(folder_path) if f.endswith('.wav')]
+    folder_path = Path(folder_path)  # Ensure folder_path is a Path object
+    output_file = folder_path / output_file  # Set the full output path
 
-    # Sort files (optional)
-    wav_files.sort()  # Sort files alphabetically or by any other criteria if needed
+    # Get a list of all .wav files in the folder
+    wav_files = [str(folder_path / f) for f in os.listdir(folder_path) if f.endswith(".wav")]
+    
+    if not wav_files:
+        print(f"No WAV files found in the folder: {folder_path}")
+        return
+    
+    # Start by loading the first audio file
+    merged_audio = AudioSegment.from_file(wav_files[0], format="wav")
 
-    output_path = os.path.join(folder_path, output_file)
-    with wave.open(output_path, 'wb') as outfile:
-        for i, wav_file in enumerate(wav_files):
-            with wave.open(os.path.join(folder_path, wav_file), 'rb') as infile:
-                # Set the parameters for the output file from the first input file
-                if i == 0:
-                    outfile.setparams(infile.getparams())
-                # Write frames to the output file
-                outfile.writeframes(infile.readframes(infile.getnframes()))
+    # Append the rest of the files
+    for file in wav_files[1:]:
+        audio = AudioSegment.from_file(file, format="wav")
+        merged_audio += audio
 
-    print(f"Merged audio file saved at: {output_path}")
+    # Export the merged audio to the desired output file
+    merged_audio.export(output_file, format="wav")
+    print(f"Merged audio saved to: {output_file}")
 
-
+# # Example usage
+# folder_path = "Outputs"  # Path to the folder containing the .wav files
+# output_file = "merged_audio.wav"  # Name of the output merged file
+# merge_wav_files(folder_path, output_file)

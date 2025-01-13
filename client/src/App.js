@@ -5,23 +5,51 @@ import Sections from './components/Sections/Sections'
 import SplitText from './SplitText';
 
 
+
 export default function App() {
     const [text, setText] = useState('');
     const [audioUrl, setAudioUrl] = useState([])
     const [fileName, setFileName] = useState('')
-
+    const [allUrlsResolved, setAllUrlsResolved] = useState(false)
 
     useEffect(() => {
       if (text) {
-        console.time("Text-to-Audio-Generation")
-        const audioFileUrls = SplitText(text).map((chunk, index) => {
-          return `http://localhost:5000/tts/${encodeURIComponent(chunk)}/${fileName}${index+1}`;
-        });
-        console.log("Done")
-        setAudioUrl(audioFileUrls);  // Update state with the generated URLs
-        console.timeEnd("Text-to-Audio-Generation");
+        console.time("Text-to-Audio-Generation");
+        // Define an async function to handle API requests one by one
+        const fetchAudioUrls = async () => {
+          const chunks = SplitText(text);  // Assuming SplitText splits the text into chunks
+  
+          let resolvedCount = 0;
+          // Loop through the chunks, fetch each one, and render one by one
+          for (let index = 0; index < chunks.length; index++) {
+            const chunk = chunks[index];
+            const audioFileUrl = `http://localhost:5000/tts/${encodeURIComponent(chunk)}/${fileName}${index + 1}`;
+  
+            // Wait for the audio file to be available (this will be a simple simulation of waiting)
+            try {
+              const response = await fetch(audioFileUrl);
+              if (response.ok) {
+                setAudioUrl((prev) => [...prev, audioFileUrl]); // Update the state with the new audio URL
+                console.log(`Audio URL fetched: ${audioFileUrl}`);
+                resolvedCount++;
+              } else {
+                console.error(`Error fetching audio for chunk ${index + 1}`);
+              }
+            } catch (error) {
+              console.error(`Error during fetch for chunk ${index + 1}: ${error}`);
+            }
+          }
+          if (resolvedCount === chunks.length) {
+            setAllUrlsResolved(true);  // All URLs have been resolved
+          }
+          console.timeEnd("Text-to-Audio-Generation");
+        };
+  
+        // Call the async function
+        fetchAudioUrls();
       }
-    }, [text]);
+    }, [text]);  // Dependencies: text and fileName
+
   return(
     <div className='app'>
       <PdfInput 
@@ -29,8 +57,13 @@ export default function App() {
         setText={setText}
         setFileName={setFileName}
         setAudioUrl={setAudioUrl}
+        setAllUrlsResolved={setAllUrlsResolved}
         />
-      {audioUrl? <Sections audioUrl={audioUrl}/> : <></>}
+      {<Sections 
+          audioUrl={audioUrl}
+          fileName={fileName}
+          allUrlsResolved={allUrlsResolved}
+          /> }
     </div>
     
   )

@@ -2,8 +2,8 @@ import React from 'react'
 import './Sections.css'
 import Section from '../Section/Section'
 
-export default function Sections({audioUrl}){
-    // const fullBookUrl = `http://localhost:5000/final`;
+export default function Sections({audioUrl, fileName, allUrlsResolved}){
+    const fullBookUrl = `http://localhost:5000/merged/${fileName}`;
     return(
         <div className='sections'>
             {audioUrl.map((url, index) => {
@@ -15,12 +15,12 @@ export default function Sections({audioUrl}){
                     />
                 );
             })}
-            {/* <div className='full-book'>
+            {allUrlsResolved? <div className='full-book'>
                 <Section 
-                        name={`Full book`}
+                        name={`${fileName}`}
                         audioUrl={fullBookUrl}
                     />
-            </div> */}
+            </div>:<></>}
         </div>
         
     )

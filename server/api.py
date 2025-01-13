@@ -4,7 +4,9 @@ from pathlib import Path
 from openai import OpenAI
 import os
 import pdfplumber
+from pydub import AudioSegment
 from dotenv import load_dotenv
+import mergeWav
 load_dotenv()
 
 from pathlib import Path
@@ -21,16 +23,33 @@ out_dir = Path(__file__).parent / "Outputs"
 @app.route('/tts/<text>/<name>')
 def text_to_speech(text, name):
     speech_file_path = out_dir / f"{name}.wav"
+
+    # Generate and validate audio only if it doesn't exist
     if not speech_file_path.exists():
-        print(f"Generating audio for {name}")
-        print(f"Api requested for {name}")
-        print(f"Text: {text}")
-        with client.audio.speech.with_streaming_response.create(
-                model="tts-1",
-                voice="alloy",
-                input=text
-        ) as response:
-            response.stream_to_file(speech_file_path)
+        print(f"Generating and validating audio for {name}")
+        try:
+            # Generate audio using the API
+            with client.audio.speech.with_streaming_response.create(
+                    model="tts-1",
+                    voice="alloy",
+                    input=text
+            ) as response:
+                response.stream_to_file(speech_file_path)
+
+            # Optional validation step
+            try:
+                audio = AudioSegment.from_file(speech_file_path)
+                audio.export(speech_file_path, format="wav")  # Ensure valid .wav
+                print(f"Audio validated and saved: {speech_file_path}")
+            except Exception as e:
+                print(f"Validation failed for {name}: {e}")
+                speech_file_path.unlink()  # Remove invalid file
+                raise
+
+        except Exception as e:
+            print(f"Error generating audio for {name}: {e}")
+            return f"Error generating audio: {e}", 500
+
     return send_from_directory(out_dir, f"{name}.wav", as_attachment=True, mimetype='audio/wav')
 
 
@@ -52,6 +71,14 @@ def upload():
         return jsonify({'success': True, 'extracted_text': extracted_text})
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
+    
+
+# @app.route('/merged/<name>', methods=['POST'])
+# def merged(name):
+#     speech_file_path = out_dir / f"{name}.wav"
+#     if not speech_file_path.exists():
+#         mergeWav.merge_wav_files("Outputs", f"{name}.wav")
+#     return send_from_directory(out_dir, f"{name}.wav", as_attachment=True, mimetype='audio/wav')
 
 
 
