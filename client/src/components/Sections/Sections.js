@@ -1,29 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import './Sections.css'
 import Section from '../Section/Section'
+import FetchFullBookUrl from '../Methods/FetchFullBookUrl';
 
 export default function Sections({audioUrl, fileName, allUrlsResolved, fullUrlResolved, setFullUrlResolved}){
     const [fullBookUrl, setFullBookUrl] = useState(null);
     useEffect(() => {
         if (allUrlsResolved) {
-          const fetchFullBookUrl = async () => {
-            // Replace this with your actual endpoint for the full book
-            console.log("requesting full merge")
-            const url = `http://localhost:5000/merged/${fileName}`
-            try{
-                const response = await fetch(url)
-                if (response.ok){
-                    setFullBookUrl(url)
-                    setFullUrlResolved(true)
-                }else {
-                    console.error("Error fetching full audio");
-                }
-            }catch (error) {
-                console.error("Error fetching full book URL:", error);
-              }
-          };
-    
-          fetchFullBookUrl();
+          FetchFullBookUrl(fileName, setFullBookUrl, setFullUrlResolved);
         }
       }, [allUrlsResolved]); 
     return(

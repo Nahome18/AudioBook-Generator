@@ -1,8 +1,6 @@
-import { React, useState, useRef } from 'react'
+import { React, useState } from 'react'
 import './PdfInput.css'
-import ConvertPdf from './ConvertPdf';
-
-
+import ConvertPdf from '../Methods/ConvertPdf';
 
 export default function PdfInput({fileName, setText, setFileName, setAudioUrl, setAllUrlsResolved, setFullUrlResolved}){
 
@@ -18,7 +16,6 @@ export default function PdfInput({fileName, setText, setFileName, setAudioUrl, s
             setNewf(!newf)
             setFileName(file.name);
             await ConvertPdf(file, setText);
-
 
         } catch (error) {
             console.error('Error during file processing:', error);

@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './Section.css'
 
-export default function Sections({name, audioUrl}){
+export default function Section({name, audioUrl}){
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(new Audio(audioUrl))
 
@@ -14,6 +14,16 @@ export default function Sections({name, audioUrl}){
             setIsPlaying(false);
         }
     };
+      // Reset play state when audio ends
+    useEffect(() => {
+        const handleEnd = () => setIsPlaying(false);
+        audioRef.current.addEventListener('ended', handleEnd);
+
+        // Cleanup event listener
+        return () => {
+        audioRef.current.removeEventListener('ended', handleEnd);
+        };
+    }, []);
     return(
         <div className='section'>
             <h2>{name}</h2>
