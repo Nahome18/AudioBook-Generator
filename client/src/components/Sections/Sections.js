@@ -8,6 +8,7 @@ export default function Sections({audioUrl, fileName, allUrlsResolved, fullUrlRe
         if (allUrlsResolved) {
           const fetchFullBookUrl = async () => {
             // Replace this with your actual endpoint for the full book
+            console.log("requesting full merge")
             const url = `http://localhost:5000/merged/${fileName}`
             try{
                 const response = await fetch(url)
@@ -40,7 +41,7 @@ export default function Sections({audioUrl, fileName, allUrlsResolved, fullUrlRe
             </div>
             {fullUrlResolved? <div className='full-book'>
                 <Section 
-                        name={`${fileName}`}
+                        name={"Full book"}
                         audioUrl={fullBookUrl}
                     />
             </div>:<></>}

@@ -30,9 +30,37 @@ export default function App() {
             try {
               const response = await fetch(audioFileUrl);
               if (response.ok) {
-                setAudioUrl((prev) => [...prev, audioFileUrl]); // Update the state with the new audio URL
+                 // Update the state with the new audio URL
                 console.log(`Audio URL fetched: ${audioFileUrl}`);
                 resolvedCount++;
+                if (resolvedCount%2==0){
+                  // Replace this with your actual endpoint for the full book
+                  const url = `http://localhost:5000/miniMerged/${fileName}${index}`
+                  try{
+                      const response = await fetch(url)
+                      if (response.ok){
+                        setAudioUrl((prev) => [...prev, url]);
+                      }else {
+                        console.error(`Error fetching audio for minimerge ${fileName}${index}`);
+                      }
+                  }catch (error) {
+                      console.error("Error fetching full book URL:", error);
+                    }
+                } else{
+                  if (resolvedCount === chunks.length){
+                    const url = `http://localhost:5000/miniMerged/${fileName}${index}`
+                  try{
+                      const response = await fetch(url)
+                      if (response.ok){
+                        setAudioUrl((prev) => [...prev, url]);
+                      }else {
+                        console.error(`Error fetching audio for minimerge ${fileName}${index}`);
+                      }
+                  }catch (error) {
+                      console.error("Error fetching full book URL:", error);
+                    }
+                  }
+                }
               } else {
                 console.error(`Error fetching audio for chunk ${index + 1}`);
               }

@@ -7,6 +7,7 @@ import pdfplumber
 from pydub import AudioSegment
 from dotenv import load_dotenv
 import mergeWav
+import miniMerge
 load_dotenv()
 
 from pathlib import Path
@@ -18,11 +19,17 @@ key = os.getenv("api_key")
 client = OpenAI(api_key=key)
 
 
-out_dir = Path(__file__).parent / "Outputs"
+base_out_dir = Path(__file__).parent / "Test"
+
 
 @app.route('/tts/<text>/<name>')
 def text_to_speech(text, name):
-    speech_file_path = out_dir / f"{name}.wav"
+    # Create a specific folder for the given name
+    folder_path = base_out_dir / name.split('.')[0]
+    folder_path.mkdir(parents=True, exist_ok=True)  # Ensure the folder exists
+
+    # Define the path for the audio file in the specific folder
+    speech_file_path = folder_path / f"{name}.wav"
 
     # Generate and validate audio only if it doesn't exist
     if not speech_file_path.exists():
@@ -50,7 +57,8 @@ def text_to_speech(text, name):
             print(f"Error generating audio for {name}: {e}")
             return f"Error generating audio: {e}", 500
 
-    return send_from_directory(out_dir, f"{name}.wav", as_attachment=True, mimetype='audio/wav')
+    # Send the file from the specific folder
+    return send_from_directory(folder_path, f"{name}.wav", as_attachment=True, mimetype='audio/wav')
 
 
 @app.route('/upload', methods=['POST'])
@@ -72,13 +80,30 @@ def upload():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
     
+    
+out_dir_m = Path(__file__).parent / "MergedOutputs"
+input_dir_m = Path(__file__).parent / "Test"
 
 @app.route('/merged/<name>')
 def merged(name):
-    speech_file_path = out_dir / f"{name}merged.wav"
+    out_path = out_dir_m / name.split('.')[0]
+    
+    speech_file_path = out_path / f"{name}fullmerged.wav"
     if not speech_file_path.exists():
-        mergeWav.merge_wav_files("Outputs", f"{name}merged.wav")
-    return send_from_directory(out_dir, f"{name}merged.wav", as_attachment=True, mimetype='audio/wav')
+        mergeWav.merge_wav_files(out_path, f"{name}fullmerged.wav")
+    return send_from_directory(out_path, f"{name}fullmerged.wav", as_attachment=True, mimetype='audio/wav')
+
+
+@app.route('/miniMerged/<name>')
+def minimerged(name):
+    out_path = out_dir_m / name.split('.')[0]
+    in_path = input_dir_m / name.split('.')[0]
+    speech_file_path = out_path / f"{name}minimerged.wav"
+    if not speech_file_path.exists():
+        miniMerge.miniMerge(in_path, out_path, f"{name}minimerged.wav")
+    return send_from_directory(out_path, f"{name}minimerged.wav", as_attachment=True, mimetype='audio/wav')
+ 
+
 
 
 

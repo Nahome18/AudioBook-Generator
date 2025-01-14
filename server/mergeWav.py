@@ -3,7 +3,8 @@ from pydub import AudioSegment
 from pathlib import Path
 
 def merge_wav_files(folder_path, output_file):
-    folder_path = Path(folder_path)  # Ensure folder_path is a Path object
+    print("Running full merge")
+      # Ensure folder_path is a Path object
     output_file = folder_path / output_file  # Set the full output path
 
     # Get a list of all .wav files in the folder
@@ -24,8 +25,3 @@ def merge_wav_files(folder_path, output_file):
     # Export the merged audio to the desired output file
     merged_audio.export(output_file, format="wav")
     print(f"Merged audio saved to: {output_file}")
-
-# # Example usage
-# folder_path = "Outputs"  # Path to the folder containing the .wav files
-# output_file = "merged_audio.wav"  # Name of the output merged file
-# merge_wav_files(folder_path, output_file)
