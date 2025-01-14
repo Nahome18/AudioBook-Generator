@@ -1,6 +1,17 @@
+from flask import send_from_directory
 import os
 from pydub import AudioSegment
 from pathlib import Path
+
+
+def handle_full_merge(out_dir_m, name):
+    out_path = out_dir_m / name.split('.')[0]
+    
+    speech_file_path = out_path / f"{name}fullmerged.wav"
+    if not speech_file_path.exists():
+        merge_wav_files(out_path, f"{name}fullmerged.wav")
+    return send_from_directory(out_path, f"{name}fullmerged.wav", as_attachment=True, mimetype='audio/wav')
+
 
 def merge_wav_files(folder_path, output_file):
     print("Running full merge")

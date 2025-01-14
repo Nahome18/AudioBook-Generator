@@ -1,6 +1,17 @@
+from flask import send_from_directory
 import os
 from pydub import AudioSegment
 from pathlib import Path
+
+
+def handle_mini_merge(out_dir_m, input_dir_m, name):
+    out_path = out_dir_m / name.split('.')[0]
+    in_path = input_dir_m / name.split('.')[0]
+    speech_file_path = out_path / f"{name}minimerged.wav"
+    if not speech_file_path.exists():
+        miniMerge(in_path, out_path, f"{name}minimerged.wav")
+    return send_from_directory(out_path, f"{name}minimerged.wav", as_attachment=True, mimetype='audio/wav')
+ 
 
 def miniMerge(input_folder, output_folder, output_file_name):
     print("Running minimerge")

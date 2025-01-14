@@ -39,6 +39,7 @@ export default function App() {
                   try{
                       const response = await fetch(url)
                       if (response.ok){
+                        
                         setAudioUrl((prev) => [...prev, url]);
                       }else {
                         console.error(`Error fetching audio for minimerge ${fileName}${index}`);
