@@ -3,7 +3,7 @@ export default function SplitText(text){
     const words = text.split(" ")
     let currWord = ''
     for (let i = 0; i < words.length; i += 1) {
-        if (currWord.length + words[i].length < 60){
+        if (currWord.length + words[i].length < 3500){
             currWord += (words[i] + " ")
         }else{
             result.push(currWord)

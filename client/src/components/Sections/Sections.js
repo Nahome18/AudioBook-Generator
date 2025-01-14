@@ -23,12 +23,21 @@ export default function Sections({audioUrl, fileName, allUrlsResolved, fullUrlRe
                     );
                 })}
             </div>
-            {fullUrlResolved? <div className='full-book'>
-                <Section 
-                        name={"Full book"}
-                        audioUrl={fullBookUrl}
+            {fullUrlResolved ? (
+                <div className='full-book'>
+                    <Section 
+                    name={"Full book"}
+                    audioUrl={fullBookUrl}
                     />
-            </div>:<></>}
+                </div>
+                ) : (
+                fileName ? (
+                    <span style={{ fontStyle: 'italic', fontSize: "15px" }} className='section'>
+                    Processing Full Book......
+                    </span>
+                ) : null
+                )}
+
         </div>
         
     )

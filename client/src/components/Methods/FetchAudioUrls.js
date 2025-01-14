@@ -2,6 +2,13 @@ import SplitText from "./SplitText";
 
 const FetchAudioUrls = async (text, fileName, setAudioUrl, setAllUrlsResolved) => {
     const chunks = SplitText(text);  // Assuming SplitText splits the text into chunks
+    console.time("Text-to-Audio-Generation");
+    
+    let lst = []
+    for (let i=0; i<chunks.length; i+=2){
+      lst.push("")
+    }
+    setAudioUrl(lst)
 
     let resolvedCount = 0;
     // Loop through the chunks, fetch each one, and render one by one
@@ -23,7 +30,20 @@ const FetchAudioUrls = async (text, fileName, setAudioUrl, setAllUrlsResolved) =
                 const response = await fetch(url)
                 if (response.ok){
                   
-                  setAudioUrl((prev) => [...prev, url]);
+                  setAudioUrl((prev) => {
+                    const newAudioUrlList = [...prev];  // Copy the previous array to avoid mutation
+                    const firstEmptyIndex = newAudioUrlList.indexOf(""); // Find the first empty string
+                    
+                    if (firstEmptyIndex !== -1) {
+                      newAudioUrlList[firstEmptyIndex] = url;  // Replace the first empty string with the new URL
+                    } else {
+                      // If there is no empty string, you can choose to add the URL to the front (or anywhere else in the array)
+                      newAudioUrlList.unshift(url);
+                    }
+                    
+                    return newAudioUrlList;
+                  });
+
                 }else {
                   console.error(`Error fetching audio for minimerge ${fileName}${index}`);
                 }
@@ -36,7 +56,20 @@ const FetchAudioUrls = async (text, fileName, setAudioUrl, setAllUrlsResolved) =
             try{
                 const response = await fetch(url)
                 if (response.ok){
-                  setAudioUrl((prev) => [...prev, url]);
+                  setAudioUrl((prev) => {
+                    const newAudioUrlList = [...prev];  // Copy the previous array to avoid mutation
+                    const firstEmptyIndex = newAudioUrlList.indexOf(""); // Find the first empty string
+                    
+                    if (firstEmptyIndex !== -1) {
+                      newAudioUrlList[firstEmptyIndex] = url;  // Replace the first empty string with the new URL
+                    } else {
+                      // If there is no empty string, you can choose to add the URL to the front (or anywhere else in the array)
+                      newAudioUrlList.unshift(url);
+                    }
+                    
+                    return newAudioUrlList;
+                  });
+
                 }else {
                   console.error(`Error fetching audio for minimerge ${fileName}${index}`);
                 }
