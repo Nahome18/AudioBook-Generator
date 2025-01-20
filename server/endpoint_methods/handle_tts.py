@@ -1,5 +1,7 @@
 from flask import send_from_directory
 from pydub import AudioSegment
+from endpoint_methods import add_url
+import json
 
 def handle_tts(base_out_dir, text, name, client):
     # Create a specific folder for the given name
@@ -35,5 +37,7 @@ def handle_tts(base_out_dir, text, name, client):
             print(f"Error generating audio for {name}: {e}")
             return f"Error generating audio: {e}", 500
 
-    # Send the file from the specific folder
-    return send_from_directory(folder_path, f"{name}.wav", as_attachment=True, mimetype='audio/wav')
+    
+    # return send_from_directory(folder_path, f"{name}.wav", as_attachment=True, mimetype='audio/wav')
+
+    return f"http://localhost:5000/get-wav/{name}"

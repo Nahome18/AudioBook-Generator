@@ -3,7 +3,7 @@ import './Sections.css'
 import Section from '../Section/Section'
 import FetchFullBookUrl from '../Methods/FetchFullBookUrl';
 
-export default function Sections({audioUrl, fileName, allUrlsResolved, fullUrlResolved, setFullUrlResolved}){
+export default function Sections({audioFiles, fileName, allUrlsResolved, fullUrlResolved, setFullUrlResolved}){
     const [fullBookUrl, setFullBookUrl] = useState(null);
     useEffect(() => {
         if (allUrlsResolved) {
@@ -13,7 +13,14 @@ export default function Sections({audioUrl, fileName, allUrlsResolved, fullUrlRe
     return(
         <div className='sections'>
             <div className='content'>
-                {audioUrl.map((url, index) => {
+                {audioFiles.map((file, index) => (
+                <Section 
+                    key={index + 1}  // Ensure key is unique for each child
+                    name={`Section ${index + 1}`}
+                    audioUrl={file.url}  // Assuming file contains a 'url' property
+                />
+                ))}
+                {/* {audioUrl.map((url, index) => {
                     return (
                         <Section 
                             key={index + 1}  // Add a unique key for each child in a list
@@ -21,7 +28,7 @@ export default function Sections({audioUrl, fileName, allUrlsResolved, fullUrlRe
                             audioUrl={url}
                         />
                     );
-                })}
+                })} */}
             </div>
             {fullUrlResolved ? (
                 <div className='full-book'>
