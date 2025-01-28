@@ -63,10 +63,14 @@ def get_urls():
     urls = []
     i = 1
     for section in sections:
+        print(f"Section{i}")
         url = handle_tts.handle_tts(base_out_dir, section, f"{name}{i}", client)
         urls.append(url)
+        if i%2==0:
+            handle_mini_merge.handle_mini_merge(out_dir_m, input_dir_m, f"{name}{i}")
         i+=1
-    
+    if len(sections)%2==1:
+        handle_mini_merge.handle_mini_merge(out_dir_m, input_dir_m, f"{name}{i}")
     return jsonify({"fileName":name, "allResolved":True})
 
 BOOKS_FOLDER = os.path.join(BASE_DIR, "Test")

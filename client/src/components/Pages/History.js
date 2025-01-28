@@ -18,6 +18,8 @@ export default function HistoryPage() {
         }
         const data = await response.json();
         setAudioFiles(data);  // Store audio files for the selected book
+        console.log(`Urls: ${data}`, typeof(data))
+        console.log(response)
       } catch (error) {
         setError(error.message);
       } finally {

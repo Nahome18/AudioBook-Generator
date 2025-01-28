@@ -12,6 +12,8 @@ export default function Books(){
         }
         const data = await response.json();
         setBooks(data);  // Store the fetched books
+        console.log(`Books: ${data}`, typeof(data))
+        console.log(response)
       } catch (error) {
         console.error('Error fetching books:', error.message);
       }
