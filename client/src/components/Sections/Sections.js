@@ -3,13 +3,12 @@ import './Sections.css'
 import Section from '../Section/Section'
 import FetchFullBookUrl from '../Methods/FetchFullBookUrl';
 
-export default function Sections({audioFiles, fileName, allUrlsResolved, fullUrlResolved, setFullUrlResolved}){
-    const [fullBookUrl, setFullBookUrl] = useState(null);
-    useEffect(() => {
-        if (allUrlsResolved) {
-          FetchFullBookUrl(fileName, setFullBookUrl, setFullUrlResolved);
-        }
-      }, [allUrlsResolved]); 
+export default function Sections({audioFiles, fileName, fullBookUrl}){
+    // useEffect(() => {
+    //     if (allUrlsResolved) {
+    //       FetchFullBookUrl(fileName, setFullBookUrl, setFullUrlResolved);
+    //     }
+    //   }, [allUrlsResolved]); 
     return(
         <div className='sections'>
             <div className='content'>
@@ -30,7 +29,7 @@ export default function Sections({audioFiles, fileName, allUrlsResolved, fullUrl
                     );
                 })} */}
             </div>
-            {fullUrlResolved ? (
+            {fullBookUrl ? (
                 <div className='full-book'>
                     <Section 
                     name={"Full book"}

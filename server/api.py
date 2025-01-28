@@ -12,7 +12,7 @@ load_dotenv()
 
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 key = os.getenv("api_key")
@@ -73,7 +73,8 @@ def get_urls():
             update_json.handle_json(book_name, "urls", file_name)
         i+=1
     if len(sections)%2==1:
-        handle_mini_merge.handle_mini_merge(out_dir_m, input_dir_m, f"{name}{i}")
+        file_name = handle_mini_merge.handle_mini_merge(out_dir_m, input_dir_m, f"{name}{i}")
+        update_json.handle_json(book_name, "urls", file_name)
     full_name = handle_full_merge.handle_full_merge(out_dir_m, name)
     update_json.handle_json(book_name, "full_url", full_name)
     return jsonify({"fileName":name, "allResolved":True})
@@ -96,10 +97,11 @@ def get_history(book_name):
         # List all .wav files in the book's folder
         data = update_json.load_json_file("data.json")
         files = data[book_name]["urls"]
+        full_book_url = f"http://localhost:5000/get-wav/{book_name}/{data[book_name]["full_url"][0]}"
         print(files)
         # Create a JSON response with filenames and URLs
         wav_files = [{"fileName": f, "url": f"http://localhost:5000/get-wav/{book_name}/{f}"} for f in files]
-        return jsonify(wav_files)
+        return jsonify({'urls': wav_files, 'full_url':full_book_url})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

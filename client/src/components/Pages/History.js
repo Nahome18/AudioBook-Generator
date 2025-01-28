@@ -8,6 +8,7 @@ export default function HistoryPage() {
   const [audioFiles, setAudioFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [fullBookUrl, setFullBookUrl] = useState(null);
 
   useEffect(() => {
     const fetchAudioFiles = async () => {
@@ -17,9 +18,10 @@ export default function HistoryPage() {
           throw new Error('Failed to fetch audio files');
         }
         const data = await response.json();
-        setAudioFiles(data);  // Store audio files for the selected book
-        console.log(`Urls: ${data}`, typeof(data))
-        console.log(response)
+        setAudioFiles(data.urls);  // Store audio files for the selected book
+        setFullBookUrl(data.full_url)
+        console.log(data.urls)
+        console.log(data.full_url)
       } catch (error) {
         setError(error.message);
       } finally {
@@ -42,7 +44,7 @@ export default function HistoryPage() {
       ) : (
         // Corrected conditional rendering
         audioFiles.length > 0 ? (
-          <Sections audioFiles={audioFiles}/>
+          <Sections audioFiles={audioFiles} fullBookUrl={fullBookUrl}/>
           // <div>
           //   {audioFiles.map((file, index) => (
           //     <Section 

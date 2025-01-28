@@ -21,9 +21,7 @@ export default function App() {
         FetchAudioUrls(text, fileName, setAudioUrl, setAllUrlsResolved, setTest);
       }
     }, [text]);
-    useEffect(() => {
-      console.log(audioUrl)
-    }, [audioUrl])
+
   return(
     <div className='app'>
       <Routes>

@@ -1,3 +1,12 @@
 {
-
+    "test": {
+        "urls": [
+            "test.pdf2minimerged.wav",
+            "test.pdf4minimerged.wav",
+            "test.pdf6minimerged.wav"
+        ],
+        "full_url": [
+            "test.pdffullmerged.wav"
+        ]
+    }
 }
