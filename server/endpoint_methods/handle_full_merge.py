@@ -2,7 +2,7 @@ from flask import send_from_directory
 import os
 from pydub import AudioSegment
 from pathlib import Path
-
+from natsort import natsorted
 
 def handle_full_merge(out_dir_m, name):
     out_path = out_dir_m / name.split('.')[0]
@@ -20,7 +20,7 @@ def merge_wav_files(folder_path, output_file):
     output_file = folder_path / output_file  # Set the full output path
 
     # Get a list of all .wav files in the folder
-    wav_files = [str(folder_path / f) for f in os.listdir(folder_path) if f.endswith(".wav")]
+    wav_files = natsorted([str(folder_path / f) for f in os.listdir(folder_path) if f.endswith(".wav")])
     
     if not wav_files:
         print(f"No WAV files found in the folder: {folder_path}")

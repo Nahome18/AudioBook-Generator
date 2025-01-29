@@ -5,7 +5,7 @@ import HistoryPage from './components/Pages/History';
 import FetchAudioUrls from './components/Methods/FetchAudioUrls'
 import { Route, Routes } from 'react-router-dom'
 import Books from './components/Pages/Books';
-
+import FileForm from './components/FileForm';
 
 export default function App() {
     const [text, setText] = useState('');
@@ -24,6 +24,7 @@ export default function App() {
 
   return(
     <div className='app'>
+
       <Routes>
         <Route index element={<HomePage 
                             setText={setText}

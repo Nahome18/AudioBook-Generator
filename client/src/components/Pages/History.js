@@ -13,7 +13,7 @@ export default function HistoryPage() {
   useEffect(() => {
     const fetchAudioFiles = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/get_history/${bookName}`);
+        const response = await fetch(`http://localhost:8000/get_history/${bookName}`);
         if (!response.ok) {
           throw new Error('Failed to fetch audio files');
         }

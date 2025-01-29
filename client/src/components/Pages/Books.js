@@ -6,7 +6,9 @@ export default function Books(){
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await fetch('http://localhost:5000/get_books');
+        console.log("trying to get books")
+        // const x = await fetch('http://localhost:8000/long_task')
+        const response = await fetch('http://localhost:8000/get_books');
         if (!response.ok) {
           throw new Error('Failed to fetch books');
         }
@@ -22,10 +24,14 @@ export default function Books(){
     fetchBooks();
   }, []);
 
-
+  async function handlef(){
+    console.log(892367789362)
+    const response = await fetch('http://localhost:8000/status')
+  }
   return (
     <div>
       <h1>Audiobooks</h1>
+      <button onClick={handlef}>click</button>
       {books ? (
         <div>
           {books.map((book, index) => (

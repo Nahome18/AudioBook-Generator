@@ -3,7 +3,7 @@ const FetchAudioUrls = async (text, fileName, setAudioUrl, setAllUrlsResolved, s
     console.log("Fetching");
     
     // Make a POST request to get URLs based on text and fileName
-    const response = await fetch('http://localhost:5000/create_urls', {
+    const response = await fetch('http://localhost:8000/create_urls', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

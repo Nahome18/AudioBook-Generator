@@ -2,7 +2,7 @@ from flask import send_from_directory
 import os
 from pydub import AudioSegment
 from pathlib import Path
-
+from natsort import natsorted
 
 def handle_mini_merge(out_dir_m, input_dir_m, name):
     out_path = out_dir_m / name.split('.')[0]
@@ -13,7 +13,7 @@ def handle_mini_merge(out_dir_m, input_dir_m, name):
         miniMerge(in_path, out_path, f"{name}minimerged.wav")
     return f"{name}minimerged.wav"
     #return send_from_directory(out_path, f"{name}minimerged.wav", as_attachment=True, mimetype='audio/wav')
- 
+
 
 def miniMerge(input_folder, output_folder, output_file_name):
     print("Running minimerge")
@@ -24,7 +24,7 @@ def miniMerge(input_folder, output_folder, output_file_name):
     output_file = output_folder / output_file_name  # Set the full output path
 
     # Get a list of all .wav files in the input folder
-    wav_files = [str(input_folder / f) for f in os.listdir(input_folder) if f.endswith(".wav")]
+    wav_files = natsorted([str(input_folder / f) for f in os.listdir(input_folder) if f.endswith(".wav")])
     
     if not wav_files:
         print(f"No WAV files found in the folder: {input_folder}")

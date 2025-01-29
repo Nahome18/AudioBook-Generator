@@ -1,13 +1,14 @@
+import axios from 'axios'
 export default function ConvertPdf(file, setText) {
     console.log("converting pdf")
+    
     return new Promise((resolve, reject) => {
         // Create a FormData object to upload the file to Flask
         const formData = new FormData();
         formData.append('pdf', file);
-        
-
+        console.log(typeof(formData.rea))
         // Send the file to the Flask server
-        fetch('http://localhost:5000/upload', {  // Ensure this is the correct endpoint on your Flask app
+        fetch('http://localhost:8000/upload', {  // Ensure this is the correct endpoint on your Flask app
             method: 'POST',
             body: formData,
         })

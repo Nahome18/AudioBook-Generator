@@ -4,7 +4,7 @@ def split_text(text):
     curr_word = ''
     
     for word in words:
-        if len(curr_word) + len(word) < 1500:
+        if len(curr_word) + len(word) < 750:
             curr_word += (word + " ")
         else:
             result.append(curr_word.strip())  # Remove the extra space at the end
