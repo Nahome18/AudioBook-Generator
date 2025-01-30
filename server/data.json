@@ -1,27 +1,24 @@
 {
-    "test": {
+    "wordText": {
         "urls": [
-            "test.pdf2minimerged.wav",
-            "test.pdf4minimerged.wav",
-            "test.pdf6minimerged.wav",
-            "test.pdf8minimerged.wav",
-            "test.pdf10minimerged.wav",
-            "test.pdf11minimerged.wav"
+            "wordText.pdf2minimerged.wav",
+            "wordText.pdf4minimerged.wav",
+            "wordText.pdf6minimerged.wav",
+            "wordText.pdf8minimerged.wav",
+            "wordText.pdf9minimerged.wav"
         ],
         "full_url": [
-            "test.pdffullmerged.wav"
+            "wordText.pdffullmerged.wav"
         ]
     },
     "words": {
         "urls": [
-            "words.pdf1minimerged.wav"
+            "words.pdf2minimerged.wav",
+            "words.pdf4minimerged.wav",
+            "words.pdf6minimerged.wav"
         ],
         "full_url": [
             "words.pdffullmerged.wav"
         ]
-    },
-    "wordText": {
-        "urls": [],
-        "full_url": []
     }
 }

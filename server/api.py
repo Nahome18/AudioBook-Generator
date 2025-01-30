@@ -4,9 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from endpoint_methods import handle_tts, handle_upload, handle_full_merge, handle_mini_merge, get_urls, split_text, update_json
 from pathlib import Path
 from openai import OpenAI
+from supabase import create_client, Client
 import os
-import time
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -19,8 +20,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+supabase_url = os.getenv("supabase_url")
+supabase_key = os.getenv("supabase_key")
+
+supabase: Client = create_client(supabase_url, supabase_key)
+
 key = os.getenv("api_key")
 client = OpenAI(api_key=key)
+
 
 
 base_out_dir = Path(__file__).parent / "Test"
@@ -31,11 +38,17 @@ input_dir_m = Path(__file__).parent / "Test"
 async def text_to_speech(text: str, name: str):
     return handle_tts.handle_tts(base_out_dir, text, name, client)
 
-
+new_row = {'book_name':['lobdfgdfe', 'sidh'], 'urls':[47, 83]}
 @app.get('/x')
 async def x():
-    print("jidgfjdgf")
-    return {'sudgf'}
+    # supabase.table('data').insert(new_row).execute()
+    # supabase.table('data').update(new_row).eq('id', 2).execute()
+    # supabase.table('data').delete().eq('id', 2).execute()
+    # results = supabase.table('data').select('*').execute()
+    # print(type(results.data[0]['urls']), results.data[1]['urls'])
+    res = update_json.create_row(supabase)
+    print('dhfd' ,res)
+
 
 @app.post("/upload")
 async def upload(pdf: UploadFile = File(...)):
@@ -63,20 +76,22 @@ def y(data):
     sections = split_text.split_text(text)
     urls = []
     book_name = name.split(".")[0]
-    update_json.handle_json(book_name, "", "")
-
+    book_id = update_json.save_book(book_name, supabase)
     for i, section in enumerate(sections, start=1):
         url = handle_tts.handle_tts(base_out_dir, section, f"{name}{i}", client)
         if i % 2 == 0:
             file_name = handle_mini_merge.handle_mini_merge(out_dir_m, input_dir_m, f"{name}{i}")
             update_json.handle_json(book_name, "urls", file_name)
+            update_json.save_url("urls", file_name, book_name, book_id, supabase)
 
     if len(sections) % 2 == 1:
         file_name = handle_mini_merge.handle_mini_merge(out_dir_m, input_dir_m, f"{name}{i}")
         update_json.handle_json(book_name, "urls", file_name)
+        update_json.save_url("urls", file_name, book_name, book_id, supabase)
 
     full_name = handle_full_merge.handle_full_merge(out_dir_m, name)
     update_json.handle_json(book_name, "full_url", full_name)
+    update_json.save_url("full_url", file_name, book_name, book_id, supabase)
 
     return JSONResponse(content={"fileName": name, "allResolved": True})
 
