@@ -1,4 +1,4 @@
-import React, {useState, useEffect, use} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 export default function Books(){
   const [books, setBooks] = useState([]);
@@ -24,14 +24,9 @@ export default function Books(){
     fetchBooks();
   }, []);
 
-  async function handlef(){
-    console.log(892367789362)
-    const response = await fetch('http://localhost:8000/status')
-  }
   return (
     <div>
       <h1>Audiobooks</h1>
-      <button onClick={handlef}>click</button>
       {books ? (
         <div>
           {books.map((book, index) => (

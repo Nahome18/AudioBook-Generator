@@ -17,6 +17,10 @@ def add_to_existing_json(filepath, key, value, type):
         "urls":[],
         "full_url":[]
     })
+    if not type:
+        with open(filepath, 'w') as file:
+            json.dump(data, file, indent=4)
+        return
     data[key][type] = data[key][type] + value
     with open(filepath, 'w') as file:
         json.dump(data, file, indent=4)
