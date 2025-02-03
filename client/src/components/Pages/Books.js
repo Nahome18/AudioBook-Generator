@@ -27,6 +27,7 @@ export default function Books(){
   async function handlef(){
     const response = await fetch('http://localhost:8000/x')
   }
+
   return (
     <div>
       <h1>Audiobooks</h1>
@@ -35,8 +36,8 @@ export default function Books(){
         <div>
           {books.map((book, index) => (
             <div key={index}>
-              {/* Each book is a link that leads to the HistoryPage */}
-              <Link to={`/history/${book['id']}`} style={{ marginRight: '10px' }}>
+
+              <Link to={`/history/${book['id']}`} style={{ marginRight: '10px' }} state={{ bookName:book['book_name'] }}>
                 <button>{book['book_name']}</button>
               </Link>
             </div>

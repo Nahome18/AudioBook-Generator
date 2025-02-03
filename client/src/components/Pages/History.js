@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, NavLink } from 'react-router-dom';  // Import useParams to get the URL parameter
+import { useParams, NavLink, useLocation } from 'react-router-dom';  // Import useParams to get the URL parameter
 import '../Pages/Pages.css'
 import Sections from '../Sections/Sections';
 
 export default function HistoryPage() {
-  const { bookName } = useParams();  // Extract the book name from the URL parameter
+  const { bookId } = useParams();  // Extract the book name from the URL parameter
   const [audioFiles, setAudioFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [fullBookUrl, setFullBookUrl] = useState(null);
-  const [full_exist, setFullExist] = useState(null)
+  const [full_exist, setFullExist] = useState(null);
+  const location = useLocation();
+  const bookName = location.state?.bookName;
 
   useEffect(() => {
+    console.log(bookName)
     const fetchAudioFiles = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/get_history/${bookName}`);
+        const response = await fetch(`http://localhost:8000/get_history/${bookId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch audio files');
         }
@@ -37,12 +40,12 @@ export default function HistoryPage() {
     };
 
     fetchAudioFiles();  // Fetch the audio files when the page loads
-  }, [bookName]);
+  }, [bookId]);
 
   return (
     <div className='history-page'>
       <NavLink to="/">Home Page</NavLink>
-      <h1>{bookName} Audio Files</h1>
+      <h1>{bookName}</h1>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (

@@ -6,6 +6,7 @@ import FetchAudioUrls from './components/Methods/FetchAudioUrls'
 import { Route, Routes } from 'react-router-dom'
 import Books from './components/Pages/Books';
 import FileForm from './components/FileForm';
+import DrawerList from './components/DrawerList/DrawerList';
 
 export default function App() {
     const [text, setText] = useState('');
@@ -24,6 +25,7 @@ export default function App() {
 
   return(
     <div className='app'>
+      <DrawerList />
       <Routes>
         <Route index element={<HomePage 
                             setText={setText}
@@ -37,7 +39,7 @@ export default function App() {
                             setFullUrlResolved={setFullUrlResolved}
                             />} />
         <Route path="/history" element={<Books />}/>
-        <Route path="/history/:bookName" element={<HistoryPage />} />
+        <Route path="/history/:bookId" element={<HistoryPage />} />
 
 
       </Routes>
