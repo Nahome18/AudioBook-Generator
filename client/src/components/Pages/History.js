@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, NavLink } from 'react-router-dom';  // Import useParams to get the URL parameter
-import Section from '../Section/Section';
+import '../Pages/Pages.css'
 import Sections from '../Sections/Sections';
 
 export default function HistoryPage() {
@@ -9,6 +9,7 @@ export default function HistoryPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [fullBookUrl, setFullBookUrl] = useState(null);
+  const [full_exist, setFullExist] = useState(null)
 
   useEffect(() => {
     const fetchAudioFiles = async () => {
@@ -18,8 +19,14 @@ export default function HistoryPage() {
           throw new Error('Failed to fetch audio files');
         }
         const data = await response.json();
+        const unprocessed_sections = data.processing
+        for (let i = 0; i < unprocessed_sections; i++){
+          data.urls.push("")
+        }
+        
         setAudioFiles(data.urls);  // Store audio files for the selected book
         setFullBookUrl(data.full_url)
+        setFullExist(!!data.full_exist)
         console.log(data.urls)
         console.log(data.full_url)
       } catch (error) {
@@ -33,10 +40,9 @@ export default function HistoryPage() {
   }, [bookName]);
 
   return (
-    <div>
-      <h1>{bookName} Audio Files</h1>
+    <div className='history-page'>
       <NavLink to="/">Home Page</NavLink>
-
+      <h1>{bookName} Audio Files</h1>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -44,18 +50,9 @@ export default function HistoryPage() {
       ) : (
         // Corrected conditional rendering
         audioFiles.length > 0 ? (
-          <Sections audioFiles={audioFiles} fullBookUrl={fullBookUrl}/>
-          // <div>
-          //   {audioFiles.map((file, index) => (
-          //     <Section 
-          //       key={index + 1}  // Ensure key is unique for each child
-          //       name={`Section ${index + 1}`}
-          //       audioUrl={file.url}  // Assuming file contains a 'url' property
-          //     />
-          //   ))}
-          // </div>
+          <Sections audioFiles={audioFiles} fullBookUrl={fullBookUrl} full_exist={full_exist}/>
         ) : (
-          <p>No audio files available.</p>  // Handle the case when no files are present
+          <p>No audio files.</p>  // Handle the case when no files are present
         )
       )}
     </div>

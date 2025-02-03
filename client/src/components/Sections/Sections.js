@@ -3,46 +3,36 @@ import './Sections.css'
 import Section from '../Section/Section'
 import FetchFullBookUrl from '../Methods/FetchFullBookUrl';
 
-export default function Sections({audioFiles, fileName, fullBookUrl}){
-    // useEffect(() => {
-    //     if (allUrlsResolved) {
-    //       FetchFullBookUrl(fileName, setFullBookUrl, setFullUrlResolved);
-    //     }
-    //   }, [allUrlsResolved]); 
+export default function Sections({audioFiles, fullBookUrl, full_exist}){
+
     return(
         <div className='sections'>
             <div className='content'>
-                {audioFiles.map((file, index) => (
-                <Section 
-                    key={index + 1}  // Ensure key is unique for each child
-                    name={`Section ${index + 1}`}
-                    audioUrl={file.url}  // Assuming file contains a 'url' property
-                />
-                ))}
-                {/* {audioUrl.map((url, index) => {
-                    return (
-                        <Section 
-                            key={index + 1}  // Add a unique key for each child in a list
-                            name={`Section ${index+1}`}
-                            audioUrl={url}
-                        />
-                    );
-                })} */}
+                {audioFiles.map((file, index) => 
+                    (file? <Section 
+                        key={index + 1}  // Ensure key is unique for each child
+                        name={`Section ${index + 1}`}
+                        audioUrl={file.url}  // Assuming file contains a 'url' property
+                    />:<span style={{ fontStyle: 'italic', fontSize: "15px" }} className='section'>
+                    Processing Section......
+                </span>)
+                
+                )}
+
             </div>
-            {fullBookUrl ? (
+            {full_exist ?  
                 <div className='full-book'>
                     <Section 
                     name={"Full book"}
                     audioUrl={fullBookUrl}
                     />
                 </div>
-                ) : (
-                fileName ? (
-                    <span style={{ fontStyle: 'italic', fontSize: "15px" }} className='section'>
+                :
+                <span style={{ fontStyle: 'italic', fontSize: "15px" }} className='section'>
                     Processing Full Book......
-                    </span>
-                ) : null
-                )}
+                </span>
+                
+                }
 
         </div>
         

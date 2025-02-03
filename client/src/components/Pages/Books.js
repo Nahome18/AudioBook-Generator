@@ -14,7 +14,7 @@ export default function Books(){
         }
         const data = await response.json();
         setBooks(data);  // Store the fetched books
-        console.log(`Books: ${data}`, typeof(data))
+        console.log(data)
         console.log(response)
       } catch (error) {
         console.error('Error fetching books:', error.message);
@@ -30,14 +30,14 @@ export default function Books(){
   return (
     <div>
       <h1>Audiobooks</h1>
-      <button onClick={handlef}>click</button>
+      {/* <button onClick={handlef}>click</button> */}
       {books ? (
         <div>
           {books.map((book, index) => (
             <div key={index}>
               {/* Each book is a link that leads to the HistoryPage */}
-              <Link to={`/history/${book}`} style={{ marginRight: '10px' }}>
-                <button>{book}</button>
+              <Link to={`/history/${book['id']}`} style={{ marginRight: '10px' }}>
+                <button>{book['book_name']}</button>
               </Link>
             </div>
           ))}

@@ -24,7 +24,6 @@ export default function App() {
 
   return(
     <div className='app'>
-
       <Routes>
         <Route index element={<HomePage 
                             setText={setText}

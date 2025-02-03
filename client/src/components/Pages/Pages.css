@@ -1,0 +1,8 @@
+.history-page{
+    display: flex;
+    /* grid-template-rows: 10% 10% 80%; */
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}

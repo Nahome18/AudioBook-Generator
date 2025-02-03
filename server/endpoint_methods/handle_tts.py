@@ -17,8 +17,8 @@ def handle_tts(base_out_dir, text, name, client):
         try:
             # Generate audio using the API
             with client.audio.speech.with_streaming_response.create(
-                    model="tts-1",
-                    voice="alloy",
+                    model="tts-1-hd",
+                    voice="onyx",
                     input=text
             ) as response:
                 response.stream_to_file(speech_file_path)

@@ -41,8 +41,8 @@ def create_row(supabase):
     print("Inserted row:", res.data)
     return res.data[0]['id']  # Return the full response
 
-def save_book(book_name, supabase):
-    new_row = {'book_name':book_name, 'full_url':''}
+def save_book(book_name, supabase, total_sections):
+    new_row = {'book_name':book_name, 'full_url':'', 'total_sections':total_sections}
     res = supabase.table('data').insert(new_row).execute()
     return res.data[0]['id']
 def save_url(type, url, book_name, book_id, supabase):

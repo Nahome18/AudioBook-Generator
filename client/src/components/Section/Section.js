@@ -44,7 +44,7 @@ export default function Section({ name, audioUrl }) {
     <>
       <h2>{name}</h2>
       <div className="buttons">
-        <button onClick={() => window.location.href = audioUrl}>Download</button>
+        <button onClick={() => window.location.href = audioUrl}>Down</button>
         <button onClick={handlePlayPause}>
           {isPlaying ? 'Pause' : 'Play'}
         </button>

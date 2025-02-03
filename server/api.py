@@ -7,6 +7,7 @@ from openai import OpenAI
 from supabase import create_client, Client
 import os
 from dotenv import load_dotenv
+import math
 
 
 load_dotenv()
@@ -75,8 +76,9 @@ def y(data):
     name = data.get("name")
     sections = split_text.split_text(text)
     urls = []
+    print(len(sections))
     book_name = name.split(".")[0]
-    book_id = update_json.save_book(book_name, supabase)
+    book_id = update_json.save_book(book_name, supabase, math.ceil(len(sections)/2))
     for i, section in enumerate(sections, start=1):
         url = handle_tts.handle_tts(base_out_dir, section, f"{name}{i}", client)
         if i % 2 == 0:
@@ -91,7 +93,7 @@ def y(data):
 
     full_name = handle_full_merge.handle_full_merge(out_dir_m, name)
     update_json.handle_json(book_name, "full_url", full_name)
-    update_json.save_url("full_url", file_name, book_name, book_id, supabase)
+    update_json.save_url("full_url", full_name, book_name, book_id, supabase)
 
     return JSONResponse(content={"fileName": name, "allResolved": True})
 
@@ -110,32 +112,45 @@ async def get_books():
     try:
         data = update_json.load_json_file("data.json")
         books = list(data.keys())
-        return JSONResponse(content=books)
+        x = supabase.table('data').select('id', 'book_name').order('id').execute().data
+        print(type(x))
+        print(x)
+        return JSONResponse(content=x)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/get_history/{book_name}")
-async def get_history(book_name: str):
+@app.get("/get_history/{book_id}")
+async def get_history(book_id):
     try:  
         print("in try")
         # List all .wav files in the book's folder
-        data = update_json.load_json_file("data.json")
-        files = data[book_name]["urls"]
-        full_url = data[book_name]['full_url']
+        # data = update_json.load_json_file("data.json")
+        # files = data[book_name]["urls"]
+        # full_url = data[book_name]['full_url']
+        files_data = supabase.table('urls').select('url').eq('book_id', book_id).execute().data
+        full_url_data = supabase.table('data').select('full_url').eq('id', book_id).execute().data
+        files = [row['url'] for row in files_data]
+        full_url = [row['full_url'] for row in full_url_data]
+        name_data = supabase.table('data').select('book_name').eq('id', book_id).execute().data
+        name = name_data[0]['book_name']
+
         if full_url:
             full_url = full_url[0]
         else:
             full_url = ""
 
         print(files)
-        full_book_url = f"http://localhost:8000/get-wav/{book_name}/{full_url}"
+        full_book_url = f"http://localhost:8000/get-wav/{name}/{full_url}"
         print('after full')
-        wav_files = [{"fileName": f, "url": f"http://localhost:8000/get-wav/{book_name}/{f}"} for f in files]
+        wav_files = [{"url": f"http://localhost:8000/get-wav/{name}/{f}"} for f in files]
         print('after files')
-       
-        return JSONResponse(content={"urls": wav_files, 'full_url': full_book_url})
+        total_sections = supabase.table('data').select('total_sections').eq('id', book_id).execute().data[0]['total_sections']
+        print(total_sections)
+        processing = total_sections - len(files)
+
+        return JSONResponse(content={"urls": wav_files, 'full_url': full_book_url, 'full_exist':full_url, 'processing':processing})
     except KeyError as e:
-        raise HTTPException(status_code=404, detail=f"Book '{book_name}' or key '{e.args[0]}' not found in data.json")
+        raise HTTPException(status_code=404, detail=f"Book '{name}' or key '{e.args[0]}' not found in data.json")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
