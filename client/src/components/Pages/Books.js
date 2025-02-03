@@ -1,5 +1,11 @@
 import React, {useState, useEffect, use} from 'react'
 import { Link } from 'react-router-dom';
+import '../Pages/Pages.css'
+import BooksSections from '../Sections/BooksSections';
+import Sections from '../Sections/Sections';
+import HistoryPage from './History';
+
+
 export default function Books(){
   const [books, setBooks] = useState([]);
 
@@ -29,23 +35,10 @@ export default function Books(){
   }
 
   return (
-    <div>
-      <h1>Audiobooks</h1>
-      {/* <button onClick={handlef}>click</button> */}
-      {books ? (
-        <div>
-          {books.map((book, index) => (
-            <div key={index}>
+    <div className='books-page'>
 
-              <Link to={`/history/${book['id']}`} style={{ marginRight: '10px' }} state={{ bookName:book['book_name'] }}>
-                <button>{book['book_name']}</button>
-              </Link>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>Loading books...</p>
-      )}
+      <h1>h8364</h1>
+      <BooksSections books={books}/>
     </div>
   );
 }

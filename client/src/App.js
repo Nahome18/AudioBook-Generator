@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router-dom'
 import Books from './components/Pages/Books';
 import FileForm from './components/FileForm';
 import DrawerList from './components/DrawerList/DrawerList';
+import NavBar from './components/DrawerList/NavBar';
 
 export default function App() {
     const [text, setText] = useState('');
@@ -25,24 +26,27 @@ export default function App() {
     }, [text]);
 
   return(
-    <div className='app'>
-      <DrawerList collapsed={collapsed} setCollapsed={setCollapsed}/>
-      <div className={!collapsed? 'grey-out': ""}>
-        <Routes>
-          <Route index element={<HomePage 
-                              setText={setText}
-                              setFileName={setFileName}
-                              setAudioUrl={setAudioUrl}
-                              setAllUrlsResolved={setAllUrlsResolved}
-                              audioUrl={audioUrl}
-                              fileName={fileName}
-                              allUrlsResolved={allUrlsResolved}
-                              fullUrlResolved={fullUrlResolved}
-                              setFullUrlResolved={setFullUrlResolved}
-                              />} />
-          <Route path="/history" element={<Books />}/>
-          <Route path="/history/:bookId" element={<HistoryPage />} />
-        </Routes>
+    <div className='whole'>
+      <NavBar />
+      <div className='app'>
+        <DrawerList collapsed={collapsed} setCollapsed={setCollapsed}/>
+        <div className={!collapsed? 'grey-out': ""}>
+          <Routes>
+            <Route index element={<HomePage 
+                                setText={setText}
+                                setFileName={setFileName}
+                                setAudioUrl={setAudioUrl}
+                                setAllUrlsResolved={setAllUrlsResolved}
+                                audioUrl={audioUrl}
+                                fileName={fileName}
+                                allUrlsResolved={allUrlsResolved}
+                                fullUrlResolved={fullUrlResolved}
+                                setFullUrlResolved={setFullUrlResolved}
+                                />} />
+            <Route path="/history" element={<Books />}/>
+            <Route path="/history/:bookId" element={<HistoryPage />} />
+          </Routes>
+        </div>
       </div>
     </div>
     

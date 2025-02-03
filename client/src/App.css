@@ -15,6 +15,7 @@ body {
     height: 100vh;
     display: flex;
     position: relative;
+
 }
 .grey-out{
     opacity: 0.5; /* Adjust opacity as needed */

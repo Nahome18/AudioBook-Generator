@@ -45,3 +45,12 @@
     border-top: 1px solid #ece6e6; /* Divider at the top */
     border-bottom: 1px solid #ece6e6; /* Divider at the top */
 }
+
+.book-link {
+
+  text-decoration: none;
+
+  color: inherit
+
+
+}
