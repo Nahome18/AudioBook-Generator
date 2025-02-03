@@ -15,6 +15,7 @@ export default function App() {
     const [allUrlsResolved, setAllUrlsResolved] = useState(false)
     const [fullUrlResolved, setFullUrlResolved] = useState(false)
     const [test, setTest] = useState()
+    const [collapsed, setCollapsed] = useState(false);
 
     useEffect(() => {
       if (text) {
@@ -25,24 +26,24 @@ export default function App() {
 
   return(
     <div className='app'>
-      <DrawerList />
-      <Routes>
-        <Route index element={<HomePage 
-                            setText={setText}
-                            setFileName={setFileName}
-                            setAudioUrl={setAudioUrl}
-                            setAllUrlsResolved={setAllUrlsResolved}
-                            audioUrl={audioUrl}
-                            fileName={fileName}
-                            allUrlsResolved={allUrlsResolved}
-                            fullUrlResolved={fullUrlResolved}
-                            setFullUrlResolved={setFullUrlResolved}
-                            />} />
-        <Route path="/history" element={<Books />}/>
-        <Route path="/history/:bookId" element={<HistoryPage />} />
-
-
-      </Routes>
+      <DrawerList collapsed={collapsed} setCollapsed={setCollapsed}/>
+      <div className={!collapsed? 'grey-out': ""}>
+        <Routes>
+          <Route index element={<HomePage 
+                              setText={setText}
+                              setFileName={setFileName}
+                              setAudioUrl={setAudioUrl}
+                              setAllUrlsResolved={setAllUrlsResolved}
+                              audioUrl={audioUrl}
+                              fileName={fileName}
+                              allUrlsResolved={allUrlsResolved}
+                              fullUrlResolved={fullUrlResolved}
+                              setFullUrlResolved={setFullUrlResolved}
+                              />} />
+          <Route path="/history" element={<Books />}/>
+          <Route path="/history/:bookId" element={<HistoryPage />} />
+        </Routes>
+      </div>
     </div>
     
   )

@@ -7,3 +7,18 @@
     align-items: center;
     width: 100vw;
 }
+.sidebar{
+    position: absolute; /* Positions over right component */
+    left: 0;
+    top: 20%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+
+    
+}
+.sidebar-item{
+    background-color: white;
+    border-radius: 10px;
+}
+
+  
