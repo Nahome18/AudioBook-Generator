@@ -1,6 +1,6 @@
 from endpoint_methods import split_text, handle_tts
 from pathlib import Path
-from flask import jsonify
+
 def get_urls(text, name, client):
     sections = split_text.split_text(text)
     print(f"Section {sections}")

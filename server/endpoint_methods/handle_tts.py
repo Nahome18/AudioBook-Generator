@@ -1,7 +1,6 @@
-from flask import send_from_directory
 from pydub import AudioSegment
 from endpoint_methods import add_url
-import json
+
 
 def handle_tts(base_out_dir, text, name, client):
     # Create a specific folder for the given name
