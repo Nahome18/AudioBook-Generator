@@ -10,9 +10,10 @@ export default function BooksSections({books}){
     return(
         <div className='sections' >
             <div className='content'>
-                {books? books.map((book) => 
-                <BooksSection book={book}/>
-
+                {books? books.map((book, index) => 
+                    <Link key={index} to={`/history/${book['id']}`} style={{ marginRight: '10px' }} state={{ bookName:book['book_name'] }} className="book-link">
+                        <BooksSection book={book} style={{cursor:'pointer'}}/>
+                    </Link> 
             ):<span style={{ fontStyle: 'italic', fontSize: "15px" }} className='section'>
             No books
         </span>

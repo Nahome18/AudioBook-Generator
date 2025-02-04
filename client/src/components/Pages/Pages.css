@@ -6,15 +6,24 @@
     align-items: center;
     width: 100vw;
 }
+
 .sidebar{
     position: absolute; /* Positions over right component */
     left: 0;
-    top:0;
-    height: 100%;
+    top:50px;
+    height: calc(100vh - 50px);
     background-color: rgb(255, 255, 255);
     
 }
 .sidebar-item{
     background-color: white;
     border-radius: 10px;
+}
+.nav-bar{
+    position:absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background-color: white;
+    width: 100vw;
 }

@@ -14,8 +14,8 @@
 .content {
     overflow-y: auto;  /* Make this section scrollable */
     flex-grow: 1;  /* Allow the content to take as much space as needed but not exceed the viewport */
-    scrollbar-width:none
-    
+    scrollbar-width:none;
+
 }
 .full-book{
     margin-top: auto;
@@ -24,9 +24,4 @@ h1{
     font-size: 50px;
 
 }
-.books-sections{
-    display: flex;
-    flex-direction: column;
-    width:80vw;
 
-}

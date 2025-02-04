@@ -7,9 +7,10 @@ export default function Section({ name, audioUrl }) {
 
   // Update the audio source when audioUrl changes
   useEffect(() => {
-    if (audioRef.current) {
+    if (audioUrl) {
       audioRef.current.src = audioUrl;  // Dynamically set the source
       audioRef.current.load();          // Reload the audio element with the new URL
+      console.log(`loading audio ${audioUrl}`)
     }
   }, [audioUrl]);  // Trigger whenever audioUrl changes
 

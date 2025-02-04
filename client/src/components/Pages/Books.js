@@ -36,7 +36,6 @@ export default function Books(){
 
   return (
     <div className='page'>
-
       <h1>Library</h1>
       <BooksSections books={books}/>
     </div>
