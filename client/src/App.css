@@ -19,5 +19,5 @@ body {
 }
 .grey-out{
     opacity: 0.5; /* Adjust opacity as needed */
-    pointer-events: none; /* Prevent interaction */
+
 }

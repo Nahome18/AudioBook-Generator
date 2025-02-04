@@ -43,7 +43,7 @@ export default function HistoryPage() {
   }, [bookId]);
 
   return (
-    <div className='history-page'>
+    <div className='page'>
       <NavLink to="/">Home Page</NavLink>
       <h1>{bookName}</h1>
       {loading ? (

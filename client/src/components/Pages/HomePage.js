@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 export default function HomePage({fileName, audioUrl, allUrlsResolved, fullUrlResolved, setText, setFileName, setAudioUrl, setAllUrlsResolved, setFullUrlResolved}) {
 
   return(
-    <div className='home'>
+    <div className='page'>
       <NavLink to="/history">History</NavLink>
 
       <PdfInput 

@@ -1,4 +1,4 @@
-.history-page{
+.page{
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -9,22 +9,12 @@
 .sidebar{
     position: absolute; /* Positions over right component */
     left: 0;
-    top: 20%;
+    top:0;
     height: 100%;
     background-color: rgb(255, 255, 255);
-
     
 }
 .sidebar-item{
     background-color: white;
     border-radius: 10px;
 }
-.books-page{
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-}
-

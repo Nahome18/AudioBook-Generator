@@ -3,9 +3,6 @@
         "urls": [
             "words.pdf2minimerged.wav",
             "words.pdf4minimerged.wav",
-            "words.pdf5minimerged.wav",
-            "words.pdf2minimerged.wav",
-            "words.pdf4minimerged.wav",
             "words.pdf6minimerged.wav",
             "words.pdf8minimerged.wav",
             "words.pdf10minimerged.wav",
@@ -16,34 +13,7 @@
             "words.pdf19minimerged.wav"
         ],
         "full_url": [
-            "words.pdffullmerged.wav",
             "words.pdffullmerged.wav"
-        ]
-    },
-    "wordText": {
-        "urls": [
-            "wordText.pdf2minimerged.wav",
-            "wordText.pdf4minimerged.wav",
-            "wordText.pdf6minimerged.wav",
-            "wordText.pdf2minimerged.wav",
-            "wordText.pdf4minimerged.wav",
-            "wordText.pdf6minimerged.wav",
-            "wordText.pdf8minimerged.wav",
-            "wordText.pdf10minimerged.wav",
-            "wordText.pdf12minimerged.wav",
-            "wordText.pdf14minimerged.wav",
-            "wordText.pdf16minimerged.wav",
-            "wordText.pdf18minimerged.wav",
-            "wordText.pdf20minimerged.wav",
-            "wordText.pdf22minimerged.wav",
-            "wordText.pdf24minimerged.wav",
-            "wordText.pdf26minimerged.wav",
-            "wordText.pdf28minimerged.wav",
-            "wordText.pdf29minimerged.wav"
-        ],
-        "full_url": [
-            "wordText.pdffullmerged.wav",
-            "wordText.pdffullmerged.wav"
         ]
     }
 }
